@@ -10,7 +10,6 @@ class BoardController {
         WON, LOOSE, PENDING;
     }
 
-    private final Cell[] board;
     private final int w = 4;
     private final int h = 4;
     private final Board boardM;
@@ -19,11 +18,7 @@ class BoardController {
     private int score = 0;
 
     public BoardController() {
-        board = new Cell[w * h];
-        for (int i = 0; i < board.length; i++) {
-            board[i] = Cell.EMPTY;
-        }
-        boardM = new Board(w, h, board);
+        boardM = new Board(w, h);
         boardM.addNewCell();
         boardM.addNewCell();
     }
@@ -131,6 +126,7 @@ class BoardController {
     private void updateState() {
         if (boardM.hasValue(WINNING_VALUE)) {
             state = STATE.WON;
+            
         } else if (!boardM.canContinue()) {
             state = STATE.LOOSE;
         }

@@ -11,10 +11,11 @@ public class Board {
     private final int h;
     private final Cell[] board;
 
-    Board(int w, int h, Cell[] board) {
+    Board(int w, int h) {
         this.w = w;
         this.h = h;
-        this.board = board;
+        this.board = new Cell[w * h];
+        Arrays.fill(board, Cell.EMPTY);
     }
 
     int size() {
