@@ -2,8 +2,8 @@ package de.locked.game2048;
 
 class Cell {
 
-    static final Cell EMPTY = new Cell();
     private final int value;
+    static final Cell EMPTY = new Cell();
 
     private Cell() {
         this(0);
@@ -22,7 +22,7 @@ class Cell {
     }
 
     boolean canMergeWith(Cell cell) {
-        return cell.value == this.value;
+        return !cell.isEmpty() && cell.value == this.value;
     }
 
     Cell mergeWith(Cell cell) {

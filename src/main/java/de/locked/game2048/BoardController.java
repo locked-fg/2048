@@ -1,14 +1,8 @@
 package de.locked.game2048;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 class BoardController {
 
@@ -38,26 +32,30 @@ class BoardController {
         return score;
     }
 
-    void right() {
-        if (move(Move.RIGHT)) {
+    public void right() {
+        move(Move.RIGHT);
+    }
+
+    public void up() {
+        move(Move.UP);
+    }
+
+    public void left() {
+        move(Move.LEFT);
+    }
+
+    public void down() {
+        move(Move.DOWN);
+    }
+
+    private void move(Move m) {
+        if (processMove(m)) {
             boardM.addNewCell();
             updateState();
         }
     }
 
-    void top() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void left() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    void bottom() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private boolean move(Move move) {
+    private boolean processMove(Move move) {
         boolean[][] merged = new boolean[w][h];
         boolean moved = false;
         for (Coord src : buildMoves(move)) {
@@ -113,11 +111,11 @@ class BoardController {
     @Override
     public String toString() {
         final String separator = "+" + new String(new char[w * 4]).replace("\0", "-") + "+";
-        String s = separator + "\n";
+        String s = separator + " Score: " + getScore() + "\n";
         for (int row = 0; row < h; row++) {
             s += "|";
             for (int col = 0; col < w; col++) {
-                Cell c = board[index(col, row)];
+                Cell c = boardM.get(new Coord(col, row));
                 if (c.isEmpty()) {
                     s += "    ";
                 } else {
@@ -130,12 +128,8 @@ class BoardController {
         return s;
     }
 
-    private int index(int col, int row) {
-        return row * w + col;
-    }
-
     private void updateState() {
-        if (Arrays.stream(board).anyMatch(c -> c.getValue() == WINNING_VALUE)) {
+        if (boardM.hasValue(WINNING_VALUE)) {
             state = STATE.WON;
         } else if (!boardM.canContinue()) {
             state = STATE.LOOSE;

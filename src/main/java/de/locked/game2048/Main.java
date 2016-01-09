@@ -7,6 +7,14 @@ public class Main {
         print(board);
         board.right();
         print(board);
+        board.right();
+        print(board);
+        board.right();
+        print(board);
+        board.right();
+        print(board);
+        board.right();
+        print(board);
 //        board.top();
 //        print(board);
 //        board.left();
@@ -16,7 +24,7 @@ public class Main {
     }
 
     private static void print(BoardController board) {
-        System.out.println(board.toString()+"\n\n");
+        System.out.println(board.toString());
     }
 
 }
