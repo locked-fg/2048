@@ -1,5 +1,6 @@
 package de.locked.game2048;
 
+import de.locked.game2048.model.Move;
 import java.util.Scanner;
 
 public class Console {
@@ -13,16 +14,13 @@ public class Console {
         do {
             line = scanner.nextLine().trim();
             if (line.equals("w")) {
-                bc.up();
-            }
-            if (line.equals("s")) {
-                bc.down();
-            }
-            if (line.equals("a")) {
-                bc.left();
-            }
-            if (line.equals("d")) {
-                bc.right();
+                bc.move(Move.UP);
+            } else if (line.equals("s")) {
+                bc.move(Move.DOWN);
+            } else if (line.equals("a")) {
+                bc.move(Move.LEFT);
+            } else if (line.equals("d")) {
+                bc.move(Move.RIGHT);
             }
             System.out.println(bc);
         } while (!line.equals("x"));

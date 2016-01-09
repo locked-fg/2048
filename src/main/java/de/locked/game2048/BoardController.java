@@ -28,23 +28,7 @@ class BoardController {
         return score;
     }
 
-    public void right() {
-        move(Move.RIGHT);
-    }
-
-    public void up() {
-        move(Move.UP);
-    }
-
-    public void left() {
-        move(Move.LEFT);
-    }
-
-    public void down() {
-        move(Move.DOWN);
-    }
-
-    private void move(Move m) {
+    public void move(Move m) {
         if (processMove(m)) {
             board.addNewCell();
             updateState();
