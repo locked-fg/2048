@@ -2,7 +2,6 @@ package de.locked.game2048;
 
 import de.locked.game2048.model.Move;
 import de.locked.game2048.model.Coord;
-import de.locked.game2048.model.Cell;
 import de.locked.game2048.model.Board;
 import java.util.ArrayList;
 import java.util.Collections;
