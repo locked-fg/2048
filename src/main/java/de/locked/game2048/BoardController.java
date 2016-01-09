@@ -10,17 +10,15 @@ class BoardController {
         WON, LOOSE, PENDING;
     }
 
-    private final int w = 4;
-    private final int h = 4;
-    private final Board boardM;
+    private final Board board;
     private final int WINNING_VALUE = 2048;
     private STATE state = STATE.PENDING;
     private int score = 0;
 
     public BoardController() {
-        boardM = new Board(w, h);
-        boardM.addNewCell();
-        boardM.addNewCell();
+        board = new Board(4, 4);
+        board.addNewCell();
+        board.addNewCell();
     }
 
     public int getScore() {
@@ -45,22 +43,22 @@ class BoardController {
 
     private void move(Move m) {
         if (processMove(m)) {
-            boardM.addNewCell();
+            board.addNewCell();
             updateState();
         }
     }
 
     private boolean processMove(Move move) {
-        boolean[][] merged = new boolean[w][h];
+        boolean[][] merged = new boolean[board.getWidth()][board.getHeight()];
         boolean moved = false;
         for (Coord src : buildMoves(move)) {
             Coord dst = findTargetCell(src, move, merged);
             if (!src.equals(dst)) {
-                if (boardM.isEmpty(dst)) {
-                    boardM.move(src, dst);
+                if (board.isEmpty(dst)) {
+                    board.move(src, dst);
                 } else { // merge
-                    boardM.merge(src, dst);
-                    score += boardM.get(dst).getValue();
+                    board.merge(src, dst);
+                    score += board.get(dst).getValue();
                     merged[dst.x][dst.y] = true;
                 }
                 moved = true;
@@ -74,12 +72,12 @@ class BoardController {
         do {
             now = next;
             next = now.step(m);
-        } while (boardM.inBounds(next) && boardM.isEmpty(next));
+        } while (board.inBounds(next) && board.isEmpty(next));
 
         // next is now out of bounds OR occupied (and maybe mergable)
-        if (!boardM.inBounds(next)) {
+        if (!board.inBounds(next)) {
             return now;
-        } else if (!boardM.canMerge(src, next) || merged[next.x][next.y]) {
+        } else if (!board.canMerge(src, next) || merged[next.x][next.y]) {
             // non mergable or merged already in this move
             return now;
         } else {
@@ -89,8 +87,8 @@ class BoardController {
 
     private List<Coord> buildMoves(Move move) {
         List<Coord> toMove = new ArrayList<>();
-        for (int col = 0; col < w; col++) {
-            for (int row = 0; row < h; row++) {
+        for (int col = 0; col < board.getWidth(); col++) {
+            for (int row = 0; row < board.getHeight(); row++) {
                 toMove.add(new Coord(col, row));
             }
         }
@@ -105,12 +103,12 @@ class BoardController {
 
     @Override
     public String toString() {
-        final String separator = "+" + new String(new char[w * 4]).replace("\0", "-") + "+";
+        final String separator = "+" + new String(new char[board.getWidth() * 4]).replace("\0", "-") + "+";
         String s = separator + " Score: " + getScore() + "\n";
-        for (int row = 0; row < h; row++) {
+        for (int row = 0; row < board.getHeight(); row++) {
             s += "|";
-            for (int col = 0; col < w; col++) {
-                Cell c = boardM.get(new Coord(col, row));
+            for (int col = 0; col < board.getWidth(); col++) {
+                Cell c = board.get(new Coord(col, row));
                 if (c.isEmpty()) {
                     s += "    ";
                 } else {
@@ -124,10 +122,10 @@ class BoardController {
     }
 
     private void updateState() {
-        if (boardM.hasValue(WINNING_VALUE)) {
+        if (board.hasValue(WINNING_VALUE)) {
             state = STATE.WON;
-            
-        } else if (!boardM.canContinue()) {
+
+        } else if (!board.canContinue()) {
             state = STATE.LOOSE;
         }
     }

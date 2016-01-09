@@ -102,4 +102,12 @@ public class Board {
         return Arrays.stream(board).anyMatch(c -> c.getValue() == v);
     }
 
+    int getWidth() {
+        return w;
+    }
+
+    int getHeight() {
+        return h;
+    }
+
 }
