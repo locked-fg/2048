@@ -1,15 +1,15 @@
-package de.locked.game2048;
+package de.locked.game2048.model;
 
 public class Coord {
 
-    final int x, y;
+    public final int x, y;
 
     public Coord(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    Coord step(Move m) {
+    public Coord step(Move m) {
         return new Coord(x + m.x, y + m.y);
     }
 

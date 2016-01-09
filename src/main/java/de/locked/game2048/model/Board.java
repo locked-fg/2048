@@ -1,4 +1,4 @@
-package de.locked.game2048;
+package de.locked.game2048.model;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -11,14 +11,14 @@ public class Board {
     private final int h;
     private final Cell[] board;
 
-    Board(int w, int h) {
+    public Board(int w, int h) {
         this.w = w;
         this.h = h;
         this.board = new Cell[w * h];
         Arrays.fill(board, Cell.EMPTY);
     }
 
-    int size() {
+    public int size() {
         return board.length;
     }
 
@@ -26,7 +26,7 @@ public class Board {
         return board[i];
     }
 
-    Cell get(Coord c) {
+    public Cell get(Coord c) {
         return get(index(c));
     }
 
@@ -38,7 +38,7 @@ public class Board {
         return c.y * w + c.x;
     }
 
-    boolean canContinue() {
+    public boolean canContinue() {
         return getFreeCellIndex().isPresent() || canMerge();
     }
 
@@ -60,24 +60,24 @@ public class Board {
         return false;
     }
 
-    boolean inBounds(Coord c) {
+    public boolean inBounds(Coord c) {
         return c.x >= 0 && c.x < w && c.y >= 0 && c.y < h;
     }
 
-    boolean isEmpty(Coord c) {
+    public boolean isEmpty(Coord c) {
         return get(c).isEmpty();
     }
 
-    boolean canMerge(Coord a, Coord b) {
+    public boolean canMerge(Coord a, Coord b) {
         return canMergeIndex(index(a), index(b));
     }
 
-    void move(Coord src, Coord dst) {
+    public void move(Coord src, Coord dst) {
         board[index(dst)] = board[index(src)];
         board[index(src)] = Cell.EMPTY;
     }
 
-    void merge(Coord src, Coord dst) {
+    public void merge(Coord src, Coord dst) {
         board[index(dst)] = get(dst).mergeWith(get(src));;
         board[index(src)] = Cell.EMPTY;
     }
@@ -94,20 +94,24 @@ public class Board {
         return Math.random() < 0.9 ? 2 : 4;
     }
 
-    void addNewCell() {
+    public void addNewCell() {
         getFreeCellIndex().ifPresent(i -> board[i] = new Cell(newValue()));
     }
 
-    boolean hasValue(int v) {
+    public boolean hasValue(int v) {
         return Arrays.stream(board).anyMatch(c -> c.getValue() == v);
     }
 
-    int getWidth() {
+    public int getWidth() {
         return w;
     }
 
-    int getHeight() {
+    public int getHeight() {
         return h;
+    }
+
+    public int getValue(Coord c) {
+        return get(c).getValue();
     }
 
 }

@@ -1,6 +1,6 @@
-package de.locked.game2048;
+package de.locked.game2048.model;
 
-class Cell {
+public class Cell {
 
     private final int value;
     static final Cell EMPTY = new Cell();
@@ -13,7 +13,7 @@ class Cell {
         this.value = value;
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return value == 0;
     }
 

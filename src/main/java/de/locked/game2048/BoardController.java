@@ -1,5 +1,9 @@
 package de.locked.game2048;
 
+import de.locked.game2048.model.Move;
+import de.locked.game2048.model.Coord;
+import de.locked.game2048.model.Cell;
+import de.locked.game2048.model.Board;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +62,7 @@ class BoardController {
                     board.move(src, dst);
                 } else { // merge
                     board.merge(src, dst);
-                    score += board.get(dst).getValue();
+                    score += board.getValue(dst);
                     merged[dst.x][dst.y] = true;
                 }
                 moved = true;
@@ -108,11 +112,11 @@ class BoardController {
         for (int row = 0; row < board.getHeight(); row++) {
             s += "|";
             for (int col = 0; col < board.getWidth(); col++) {
-                Cell c = board.get(new Coord(col, row));
-                if (c.isEmpty()) {
+                Coord co = new Coord(col, row);
+                if (board.isEmpty(co)) {
                     s += "    ";
                 } else {
-                    s += String.format("% 4d", c.getValue());
+                    s += String.format("% 4d", board.getValue(co));
                 }
             }
             s += "|\n";
