@@ -6,4 +6,4 @@ The official apps can also be found in [Play Store](https://play.google.com/stor
 Most of it is inspired by https://github.com/gabrielecirulli/2048 
 
 # Licence
-The code is licensed under the [MIT license.](https://github.com/locked-fg/2048/blob/master/Licence.txt)
+The code is licensed under the [MIT license.](https://github.com/locked-fg/2048/blob/master/LICENSE)
