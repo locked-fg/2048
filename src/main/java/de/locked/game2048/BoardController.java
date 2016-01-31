@@ -57,10 +57,12 @@ public class BoardController {
         return score;
     }
 
-    public void move(Move m) {
-        if (processMove(m)) {
+    public boolean move(Move m) {
+        boolean didMove = processMove(m);
+        if (didMove) {
             board.addNewCell();
         }
+        return didMove;
     }
 
     private boolean processMove(Move move) {
