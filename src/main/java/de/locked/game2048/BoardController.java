@@ -49,11 +49,17 @@ public class BoardController {
         return board.getState();
     }
 
+    public BoardController copy() {
+        BoardController bc = new BoardController(board.getState(), board.getWidth(), board.getHeight());
+        bc.score = this.score;
+        return bc;
+    }
+
     public boolean canContinue() {
         return board.canContinue();
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
@@ -120,16 +126,16 @@ public class BoardController {
 
     @Override
     public String toString() {
-        final String separator = "+" + new String(new char[board.getWidth() * 4]).replace("\0", "-") + "+";
+        final String separator = "+" + new String(new char[board.getWidth() * 5]).replace("\0", "-") + "+";
         String s = separator + " Score: " + getScore() + "\n";
         for (int row = 0; row < board.getHeight(); row++) {
             s += "|";
             for (int col = 0; col < board.getWidth(); col++) {
                 Coord co = new Coord(col, row);
                 if (board.isEmpty(co)) {
-                    s += "    ";
+                    s += " "+String.format("%4d", 0);
                 } else {
-                    s += String.format("% 4d", board.getValue(co));
+                    s += " "+String.format("%4d", board.getValue(co));
                 }
             }
             s += "|\n";
