@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class BoardController {
+public class BoardController {
 
     private final Board board;
     private int score = 0;
