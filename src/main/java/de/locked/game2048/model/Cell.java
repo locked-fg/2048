@@ -62,4 +62,10 @@ public class Cell {
         }
         return new Cell(value * 2);
     }
+
+    @Override
+    public String toString() {
+        return "Cell{" + value + '}';
+    }
+    
 }
