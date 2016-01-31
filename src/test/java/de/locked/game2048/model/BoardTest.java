@@ -47,12 +47,23 @@ public class BoardTest {
     }
     
     @Test
-    public void canMergeEdge() {
+    public void canMergeEdge1() {
         int[] cells = {
             8,    2, 8,   4,
             4,  512, 4, 256,
             8, 1024, 8,   2,
             4,   32, 2,   2};
+        Board b = new Board(cells, 4, 4);
+        assertTrue(b.canMerge());
+    }
+
+    @Test
+    public void canMergeEdge2() {
+        int[] cells = {
+            8,    2, 8,   4,
+            4,  512, 4, 256,
+            8, 1024, 8,   2,
+            8,   32, 2,   4};
         Board b = new Board(cells, 4, 4);
         assertTrue(b.canMerge());
     }
