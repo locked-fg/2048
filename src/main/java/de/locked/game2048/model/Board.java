@@ -74,34 +74,16 @@ public class Board {
         return getFreeCellIndex().isPresent() || canMerge();
     }
 
-    private boolean canMergeIndex(int a, int b) {
-        if (a < 0 || a >= board.length || b < 0 || b >= board.length) {
-            return false;
-        } else {
-            return board[a].canMergeWith(board[b]);
-        }
-    }
-
     boolean canMerge() {
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
-                int a = x + w * y;
-                int b = a + 1; // right cell
-                int c = a + w; // lower cell
-
-                if (inBounds(x + 1, y) && canMergeIndex(a, b)) {
-                    return true;
-                }
-                if (inBounds(x, y + 1) && canMergeIndex(a, c)) {
+                Coord from = new Coord(x, y);
+                if (canMerge(from, from.step(Move.RIGHT)) || canMerge(from, from.step(Move.DOWN))) {
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    private boolean inBounds(int x, int y) {
-        return x >= 0 && x < w && y >= 0 && y < h;
     }
 
     public boolean inBounds(Coord c) {
@@ -113,7 +95,7 @@ public class Board {
     }
 
     public boolean canMerge(Coord a, Coord b) {
-        return canMergeIndex(index(a), index(b));
+        return inBounds(b) && inBounds(b) && get(a).canMergeWith(get(b));
     }
 
     public void move(Coord src, Coord dst) {
