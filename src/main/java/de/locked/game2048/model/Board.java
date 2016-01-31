@@ -46,7 +46,7 @@ public class Board {
         this.h = h;
         this.board = new Cell[w * h];
         for (int i = 0; i < cells.length; i++) {
-            board[i] = new Cell(i);
+            board[i] = new Cell(cells[i]);
         }
     }
 

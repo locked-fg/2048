@@ -35,8 +35,8 @@ public class Cell {
 
     private void validate(int v) {
         Double sqrt = Math.sqrt(v);
-        if (Math.abs(sqrt - sqrt.intValue()) > 0.00001) {
-            throw new IllegalArgumentException("value " + v + "is not a valid input");
+        if (v != 2 && Math.abs(sqrt - sqrt.intValue()) > 0.00001) {
+            throw new IllegalArgumentException("value " + v + " is not a valid input");
         }
     }
 
