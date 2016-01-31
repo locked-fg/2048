@@ -32,19 +32,25 @@ import java.util.List;
 
 class BoardController {
 
-    public enum STATE {
-        WON, LOOSE, PENDING;
-    }
-
     private final Board board;
-    private final int WINNING_VALUE = 2048;
-    private STATE state = STATE.PENDING;
     private int score = 0;
 
     public BoardController() {
         board = new Board(4, 4);
         board.addNewCell();
         board.addNewCell();
+    }
+
+    public BoardController(int[] cells, int w, int h) {
+        board = new Board(cells, w, h);
+    }
+
+    public int[] getBoardState() {
+        return board.getState();
+    }
+
+    public boolean canContinue() {
+        return board.canContinue();
     }
 
     public int getScore() {
@@ -54,7 +60,6 @@ class BoardController {
     public void move(Move m) {
         if (processMove(m)) {
             board.addNewCell();
-            updateState();
         }
     }
 
@@ -129,14 +134,5 @@ class BoardController {
         }
         s += separator;
         return s;
-    }
-
-    private void updateState() {
-        if (board.hasValue(WINNING_VALUE)) {
-            state = STATE.WON;
-
-        } else if (!board.canContinue()) {
-            state = STATE.LOOSE;
-        }
     }
 }

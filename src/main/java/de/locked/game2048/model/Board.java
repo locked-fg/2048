@@ -35,10 +35,19 @@ public class Board {
     private final Cell[] board;
 
     public Board(int w, int h) {
+        this(new int[w * h], w, h);
+    }
+
+    public Board(int[] cells, int w, int h) {
+        if (w * h != cells.length) {
+            throw new IllegalArgumentException("Cells length does not equal w*h");
+        }
         this.w = w;
         this.h = h;
         this.board = new Cell[w * h];
-        Arrays.fill(board, Cell.EMPTY);
+        for (int i = 0; i < cells.length; i++) {
+            board[i] = new Cell(i);
+        }
     }
 
     public int size() {
@@ -135,6 +144,14 @@ public class Board {
 
     public int getValue(Coord c) {
         return get(c).getValue();
+    }
+
+    public int[] getState() {
+        int[] cells = new int[board.length];
+        for (int i = 0; i < cells.length; i++) {
+            cells[i] = board[i].getValue();
+        }
+        return cells;
     }
 
 }

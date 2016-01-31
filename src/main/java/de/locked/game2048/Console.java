@@ -35,22 +35,21 @@ public class Console {
 //            System.out.println(bc);
 //            bc.move(Move.DOWN);
 //        }
-
-        Scanner scanner = new Scanner(System.in);
-        String line = "";
-        do {
-            line = scanner.nextLine().trim();
-            if (line.equals("w")) {
-                bc.move(Move.UP);
-            } else if (line.equals("s")) {
-                bc.move(Move.DOWN);
-            } else if (line.equals("a")) {
-                bc.move(Move.LEFT);
-            } else if (line.equals("d")) {
-                bc.move(Move.RIGHT);
-            }
-            System.out.println(bc);
-        } while (!line.equals("x"));
-        scanner.close();
+        try (Scanner scanner = new Scanner(System.in)) {
+            String line = "";
+            do {
+                line = scanner.nextLine().trim();
+                if (line.equals("w")) {
+                    bc.move(Move.UP);
+                } else if (line.equals("s")) {
+                    bc.move(Move.DOWN);
+                } else if (line.equals("a")) {
+                    bc.move(Move.LEFT);
+                } else if (line.equals("d")) {
+                    bc.move(Move.RIGHT);
+                }
+                System.out.println(bc);
+            } while (!line.equals("x"));
+        }
     }
 }

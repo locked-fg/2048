@@ -26,14 +26,18 @@ package de.locked.game2048.model;
 public class Cell {
 
     private final int value;
-    static final Cell EMPTY = new Cell();
-
-    private Cell() {
-        this(0);
-    }
+    static final Cell EMPTY = new Cell(0);
 
     Cell(int value) {
+        validate(value);
         this.value = value;
+    }
+
+    private void validate(int v) {
+        Double sqrt = Math.sqrt(v);
+        if (Math.abs(sqrt - sqrt.intValue()) > 0.00001) {
+            throw new IllegalArgumentException("value " + v + "is not a valid input");
+        }
     }
 
     boolean isEmpty() {
