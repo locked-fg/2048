@@ -35,7 +35,7 @@ public class Cell {
         this.value = value;
     }
 
-    void validate(int v) {
+    final void validate(int v) {
         if (v != 0) { // allow 0
             Double test = log(v) / log(2);
             if (v < 0 || v == 1 || test.isNaN() || Math.abs(test - test.intValue()) > 0.00001) {
