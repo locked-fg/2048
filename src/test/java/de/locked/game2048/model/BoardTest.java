@@ -38,12 +38,23 @@ public class BoardTest {
     @Test
     public void canMergeIndex() {
         int[] cells = {
-            8, 2, 8, 4,
-            4, 512, 4, 256,
-            8, 1024, 8, 2,
-            4, 32, 2, 4};
+            8,    2, 8,   4,
+            4,  512, 4, 256,
+            8, 1024, 8,   2,
+            4,   32, 2,   4};
         Board b = new Board(cells, 4, 4);
         assertFalse(b.canMerge());
+    }
+    
+    @Test
+    public void canMergeEdge() {
+        int[] cells = {
+            8,    2, 8,   4,
+            4,  512, 4, 256,
+            8, 1024, 8,   2,
+            4,   32, 2,   2};
+        Board b = new Board(cells, 4, 4);
+        assertTrue(b.canMerge());
     }
 
 }

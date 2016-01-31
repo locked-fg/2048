@@ -83,18 +83,25 @@ public class Board {
     }
 
     boolean canMerge() {
-        // just check against right & bottom as we're symmetric
-        for (int c = 0; c < w - 1; c++) {
-            for (int r = 0; r < h - 1; r++) {
-                int a = c + w * r;
-                int b1 = c + 1 + w * r; // right cell
-                int b2 = c + w * (r + 1); // lower cell
-                if (canMergeIndex(a, b1) || canMergeIndex(a, b2)) {
+        for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+                int a = x + w * y;
+                int b = a + 1; // right cell
+                int c = a + w; // lower cell
+
+                if (inBounds(x + 1, y) && canMergeIndex(a, b)) {
+                    return true;
+                }
+                if (inBounds(x, y + 1) && canMergeIndex(a, c)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private boolean inBounds(int x, int y) {
+        return x >= 0 && x < w && y >= 0 && y < h;
     }
 
     public boolean inBounds(Coord c) {
@@ -115,7 +122,7 @@ public class Board {
     }
 
     public void merge(Coord src, Coord dst) {
-        board[index(dst)] = get(dst).mergeWith(get(src));;
+        board[index(dst)] = get(dst).mergeWith(get(src));
         board[index(src)] = Cell.EMPTY;
     }
 
