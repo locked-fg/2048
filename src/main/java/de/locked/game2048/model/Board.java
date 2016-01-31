@@ -82,11 +82,16 @@ public class Board {
         }
     }
 
-    private boolean canMerge() {
+    boolean canMerge() {
         // just check against right & bottom as we're symmetric
-        for (int i = 0; i < board.length; i++) {
-            if (canMergeIndex(i, i + 1) || canMergeIndex(i, i + w)) {
-                return true;
+        for (int c = 0; c < w - 1; c++) {
+            for (int r = 0; r < h - 1; r++) {
+                int a = c + w * r;
+                int b1 = c + 1 + w * r; // right cell
+                int b2 = c + w * (r + 1); // lower cell
+                if (canMergeIndex(a, b1) || canMergeIndex(a, b2)) {
+                    return true;
+                }
             }
         }
         return false;
