@@ -23,43 +23,46 @@
  */
 package de.locked.game2048.model;
 
-import static java.lang.Math.log;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.internal.runners.statements.ExpectException;
 
-public class Cell {
+/**
+ *
+ * @author Franz Graf <code@Locked.de>
+ */
+public class CellTest {
 
-    private final int value;
-    static final Cell EMPTY = new Cell(0);
+    List<Integer> x = Arrays.asList(new Integer[]{0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096});
 
-    Cell(int value) {
-        validate(value);
-        this.value = value;
+    @org.junit.Test
+    public void testValidateFalse() {
+        Cell cell = new Cell(0);
+        IntStream.range(-1, 4097)
+                .filter(i -> !x.contains(i))
+                .forEach(i -> {
+                    try {
+                        cell.validate(i);
+                        fail(i + " should have failed");
+                    } catch (IllegalArgumentException e) {
+                    }
+                });
     }
 
-    void validate(int v) {
-        if (v != 0) { // allow 0
-            Double test = log(v) / log(2);
-            if (v < 0 || v == 1 || test.isNaN() || Math.abs(test - test.intValue()) > 0.00001) {
-                throw new IllegalArgumentException("value " + v + " is not a valid input");
-            }
-        }
+    @org.junit.Test
+    public void testValidateTrue() {
+        Cell cell = new Cell(0);
+        x.stream()
+                .forEach(i -> {
+                    try {
+                        cell.validate(i);
+                    } catch (IllegalArgumentException e) {
+                        fail(i + " should have succeeded");
+                    }
+                });
     }
 
-    boolean isEmpty() {
-        return value == 0;
-    }
-
-    int getValue() {
-        return value;
-    }
-
-    boolean canMergeWith(Cell cell) {
-        return !cell.isEmpty() && cell.value == this.value;
-    }
-
-    Cell mergeWith(Cell cell) {
-        if (!canMergeWith(cell)) {
-            throw new UnsupportedOperationException("Cells cannot be merged.");
-        }
-        return new Cell(value * 2);
-    }
 }
