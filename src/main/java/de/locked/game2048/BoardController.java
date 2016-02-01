@@ -37,7 +37,7 @@ public class BoardController {
     private int score = 0;
 
     public BoardController() {
-        board = new Board(4, 4);
+        this(new int[16], 4, 4);
         board.addNewCell();
         board.addNewCell();
     }
@@ -67,7 +67,7 @@ public class BoardController {
     public Integer getMaxValue() {
         return Arrays.stream(getBoardState()).max().getAsInt();
     }
-    
+
     public boolean move(Move m) {
         boolean didMove = processMove(m);
         if (didMove) {
@@ -117,7 +117,10 @@ public class BoardController {
         List<Coord> toMove = new ArrayList<>();
         for (int col = 0; col < board.getWidth(); col++) {
             for (int row = 0; row < board.getHeight(); row++) {
-                toMove.add(new Coord(col, row));
+                Coord coord = new Coord(col, row);
+                if (!board.isEmpty(coord)) {
+                    toMove.add(coord);
+                }
             }
         }
         //always start from the far side
@@ -138,9 +141,9 @@ public class BoardController {
             for (int col = 0; col < board.getWidth(); col++) {
                 Coord co = new Coord(col, row);
                 if (board.isEmpty(co)) {
-                    s += " "+String.format("%4d", 0);
+                    s += " " + String.format("%4d", 0);
                 } else {
-                    s += " "+String.format("%4d", board.getValue(co));
+                    s += " " + String.format("%4d", board.getValue(co));
                 }
             }
             s += "|\n";
