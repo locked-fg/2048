@@ -27,6 +27,7 @@ import de.locked.game2048.model.Move;
 import de.locked.game2048.model.Coord;
 import de.locked.game2048.model.Board;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,6 +64,10 @@ public class BoardController {
         return score;
     }
 
+    public Integer getMaxValue() {
+        return Arrays.stream(getBoardState()).max().getAsInt();
+    }
+    
     public boolean move(Move m) {
         boolean didMove = processMove(m);
         if (didMove) {
